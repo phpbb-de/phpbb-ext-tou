@@ -52,8 +52,9 @@ class main implements EventSubscriberInterface
 		// Replace Language Variable for registration:
 		// TODO: Maybe make this controllable via ACP.
 		// VALUES SET HERE WILL OVERWRITE ALL LOCATIONS WHERE THE VARIABLE IS ACTUALLY USED!
-
-		//$this->template->assign_var('L_TERMS_OF_USE', sprintf($this->user->lang['TERMS_OF_USE_CONTENT'], $this->config['sitename'], generate_board_url()));
+		$this->user->add_lang('ucp');
+		$this->template->assign_var('L_PRIVACY_POLICY_TEXT', sprintf($this->user->lang['PRIVACY_POLICY'], $this->config['sitename']));
+		$this->template->assign_var('L_TERMS_OF_USE', sprintf($this->user->lang['TERMS_OF_USE_CONTENT'], $this->config['sitename'], generate_board_url()));
 		//$this->template->assign_var('L_TERMS_OF_USE', 'TEST');
 
 		if(version_compare($this->user->data['user_tou_version'], $this->config['tou_version'], 'eq') || $this->user->data['is_bot'] || !$this->user->data['is_registered'])
