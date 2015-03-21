@@ -22,7 +22,8 @@ class main implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.page_header'	=> 'page_header',
+			'core.page_header'			=> 'page_header',
+			'core.user_add_modify_data' => 'user_add_modify',
 		);
 	}
 
@@ -70,5 +71,14 @@ class main implements EventSubscriberInterface
 
 		// At this point we have a registered user who did not accept the newest TOU.
 		redirect($this->helper->route('phpbbde_tou_main_controller'));
+	}
+
+	public function user_add_modify($event)
+	{
+		$sql_ary = $event['sql_ary'];
+		$sql_ary['user_tou_version'] 		= $this->config['tou_version'];
+		$sql_ary['user_tou_confirmdate'] 	= time();
+		$sql_ary['user_tou_confirmip'] 		= empty($sql_ary['user_ip']) ? $this->user->ip : $sql_ary['user_ip'];
+		$event['sql_ary'] = $sql_ary;
 	}
 }
