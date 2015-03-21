@@ -6,6 +6,7 @@ services:
             - @config
             - @controller.helper
             - @user
+            - @template
             - %core.root_path%
             - %core.php_ext%
         tags:
@@ -14,7 +15,7 @@ services:
         class: phpbbde\tou\controller\main
         arguments:
             - @config
-            - @db
+            - @dbal.conn
             - @request
             - @template
             - @user

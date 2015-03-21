@@ -27,11 +27,9 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 		return array(
 			'add_columns' => array(
 				USERS_TABLE => array(
-					'COLUMNS' => array(
-						'user_tou_version'	=> array('INT:3', 0),
-						'user_tou_confirmdate' => array('INT:11', 0),
-						'user_tou_confirmip' => array('VCHAR:40', ''),
-					),
+					'user_tou_version'	=> array('INT:3', 0),
+					'user_tou_confirmdate' => array('INT:11', 0),
+					'user_tou_confirmip' => array('VCHAR:40', ''),
 				)
 			),
 		);

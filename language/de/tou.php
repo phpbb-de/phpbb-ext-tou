@@ -25,5 +25,5 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'TOU' 					=> 'Nutzungsbedingungen',
 	'CONFIRM_TOU_REDIRECT' 	=> 'Nutzungsbedingungen erfolgreich bestätigt.',
-	'TOU_DENIED' 			=> 'Die Nutzungsbedingungen wurden abgelehnt. Eine Nutzung von phpBB.de ist in diesem Fall nicht möglich.',
+	'TOU_DENIED' 			=> 'Die Nutzungsbedingungen wurden abgelehnt. Eine Nutzung von %s ist in diesem Fall nicht möglich.',
 ));
