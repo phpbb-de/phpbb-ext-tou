@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* tou [German]
+* tou
 *
 * @package language
 * @version 0.1.3
@@ -23,7 +23,7 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'TOU' 					=> 'Nutzungsbedingungen',
-	'CONFIRM_TOU_REDIRECT' 	=> 'Nutzungsbedingungen erfolgreich bestätigt.',
-	'TOU_DENIED' 			=> 'Die Nutzungsbedingungen wurden abgelehnt. Eine Nutzung von %s ist in diesem Fall nicht möglich.',
+	'TOU' 					=> 'Terms of Use',
+	'CONFIRM_TOU_REDIRECT' 	=> 'The terms of use were successfully acknowledged.',
+	'TOU_DENIED' 			=> 'The terms of use were declined. It is not possible to use %s in this case.',
 ));
