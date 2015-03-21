@@ -2,7 +2,7 @@
 	"name": "phpbbde/tou",
 	"type": "phpbb-extension",
 	"description": "Forces the user to confirm the terms of use.",
-	"homepage": "https://github.com/phpbb-de/phpbb-ext-movemessage",
+	"homepage": "https://github.com/phpbb-de/phpbb-ext-tou",
 	"version": "1.0.0",
 	"time": "2013-11-13",
 	"license": "GPL-2.0",
