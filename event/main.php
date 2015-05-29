@@ -64,7 +64,7 @@ class main implements EventSubscriberInterface
 		}
 
 		// If we are already showing the TOU, obviously we don't need to redirect there
-		if(defined('phpbbde\tou\controller\IN_TOU'))
+		if(defined('PHPBBDE\TOU\CONTROLLER\IN_TOU'))
 		{
 			return;
 		}

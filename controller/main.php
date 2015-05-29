@@ -65,7 +65,7 @@ class main
 	 */
 	public function handle($name = '')
 	{
-		define('phpbbde\tou\controller\IN_TOU', true);
+		define('PHPBBDE\TOU\CONTROLLER\IN_TOU', true);
 		$this->user->add_lang('ucp');
 		$this->user->add_lang_ext('phpbbde/tou', 'tou');
 
@@ -81,7 +81,6 @@ class main
 			'S_REGISTRATION' => true,
 			'S_UCP_ACTION' => $this->helper->route('phpbbde_tou_main_controller'),
 		));
-
 
 		if(isset($_POST['agreed']))
 		{
@@ -105,7 +104,7 @@ class main
 			}
 			trigger_error('INVALID_FORM');
 		}
-		elseif(isset($_POST['not_agreed']))
+		else if(isset($_POST['not_agreed']))
 		{
 			//check_form_key('agreement');
 			trigger_error(sprintf($this->user->lang['TOU_DENIED'], $this->config['sitename']));
