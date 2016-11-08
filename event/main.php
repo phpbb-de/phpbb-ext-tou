@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @package phpBB.de pastebin
+ * @package phpBB.de tou
  * @copyright (c) 2015 phpBB.de, gn#36
  * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
