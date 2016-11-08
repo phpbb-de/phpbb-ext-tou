@@ -58,13 +58,13 @@ class main implements EventSubscriberInterface
 		$this->template->assign_var('L_TERMS_OF_USE', sprintf($this->user->lang['TERMS_OF_USE_CONTENT'], $this->config['sitename'], generate_board_url()));
 		//$this->template->assign_var('L_TERMS_OF_USE', 'TEST');
 
-		if(version_compare($this->user->data['user_tou_version'], $this->config['tou_version'], 'eq') || $this->user->data['is_bot'] || !$this->user->data['is_registered'])
+		if (version_compare($this->user->data['user_tou_version'], $this->config['tou_version'], 'eq') || $this->user->data['is_bot'] || !$this->user->data['is_registered'])
 		{
 			return;
 		}
 
 		// If we are already showing the TOU, obviously we don't need to redirect there
-		if(defined('PHPBBDE\TOU\CONTROLLER\IN_TOU'))
+		if (defined('PHPBBDE\TOU\CONTROLLER\IN_TOU'))
 		{
 			return;
 		}

@@ -82,9 +82,9 @@ class main
 			'S_UCP_ACTION' => $this->helper->route('phpbbde_tou_main_controller'),
 		));
 
-		if(isset($_POST['agreed']))
+		if (isset($_POST['agreed']))
 		{
-			if(check_form_key('agreement'))
+			if( check_form_key('agreement'))
 			{
 				$sql = 'UPDATE ' . USERS_TABLE . '
 				SET user_tou_version = ' . (int) $this->config['tou_version'] . ',
@@ -104,7 +104,7 @@ class main
 			}
 			trigger_error('INVALID_FORM');
 		}
-		else if(isset($_POST['not_agreed']))
+		else if (isset($_POST['not_agreed']))
 		{
 			//check_form_key('agreement');
 			trigger_error(sprintf($this->user->lang['TOU_DENIED'], $this->config['sitename']));
