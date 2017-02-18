@@ -54,7 +54,7 @@ class main implements EventSubscriberInterface
 		// TODO: Maybe make this controllable via ACP.
 		// VALUES SET HERE WILL OVERWRITE ALL LOCATIONS WHERE THE VARIABLE IS ACTUALLY USED!
 		$this->user->add_lang('ucp');
-		$this->template->assign_var('L_PRIVACY_POLICY_TEXT', sprintf($this->user->lang['PRIVACY_POLICY'], $this->config['sitename']));
+		$this->template->assign_var('L_PRIVACY_POLICY_TEXT', sprintf($this->user->lang['PRIVACY_POLICY'], $this->config['sitename'], generate_board_url()));
 		$this->template->assign_var('L_TERMS_OF_USE', sprintf($this->user->lang['TERMS_OF_USE_CONTENT'], $this->config['sitename'], generate_board_url()));
 		//$this->template->assign_var('L_TERMS_OF_USE', 'TEST');
 

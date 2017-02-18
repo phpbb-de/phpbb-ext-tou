@@ -1,29 +1,37 @@
 {
-	"name": "phpbbde/tou",
-	"type": "phpbb-extension",
-	"description": "Forces the user to confirm the terms of use.",
-	"homepage": "https://github.com/phpbb-de/phpbb-ext-tou",
-	"version": "1.0.0",
-	"time": "2015-03-21",
-	"license": "GPL-2.0",
-	"authors": [
-		{
-			"name": "Martin Beckmann",
-			"email": "gn#36@phpbb.de",
-			"homepage": "https://www.phpbb.de",
-			"role": "Developer"
+	"name" : "phpbbde/tou",
+	"type" : "phpbb-extension",
+	"description" : "Forces the user to confirm the terms of use.",
+	"homepage" : "https://github.com/phpbb-de/phpbb-ext-tou",
+	"version" : "1.0.0",
+	"time" : "2015-03-21",
+	"license" : "GPL-2.0",
+	"authors" : [{
+			"name" : "Martin Beckmann",
+			"email" : "gn#36@phpbb.de",
+			"homepage" : "https://www.phpbb.de",
+			"role" : "Developer"
 		}
 	],
-	"require": {
-		"php": ">=5.3.3"
+	"require" : {
+		"php" : ">=5.3.3"
 	},
-	"require-dev": {
-		"phpbb/epv": "dev-master"
+	"require-dev" : {
+		"phpbb/epv" : "dev-master"
 	},
-	"extra": {
-		"display-name": "phpBB.de - Terms of use",
-		"soft-require": {
-			"phpbb/phpbb": "3.1.*@dev"
+	"extra" : {
+		"display-name" : "phpBB.de - Terms of use",
+		"soft-require" : {
+			"phpbb/phpbb" : "3.1.*@dev"
 		}
-	}
+	},
+	"support" : {
+		"forum" : "https://www.phpbb.de/community/",
+		"source" : "https://github.com/phpbb-de/phpbb-ext-tou",
+		"issues" : "https://github.com/phpbb-de/phpbb-ext-tou/issues"
+	},
+	"keywords" : [
+		"phpbb",
+		"terms of use"
+	]
 }
