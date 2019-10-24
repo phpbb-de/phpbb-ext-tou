@@ -70,7 +70,7 @@ class main implements EventSubscriberInterface
 		}
 
 		// At this point we have a registered user who did not accept the newest TOU.
-		redirect($this->helper->route('phpbbde_tou_main_controller'));
+		redirect($this->helper->route('phpbbde_tou_main_controller', [], false, false, \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
 	}
 
 	public function user_add_modify($event)

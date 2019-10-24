@@ -1,4 +1,4 @@
-# phpBB 3.1 Extension - phpBB.de Terms of Use
+# phpBB 3.2 Extension - phpBB.de Terms of Use
 
 ## Installation
 
