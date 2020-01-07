@@ -3,9 +3,9 @@
 	"type" : "phpbb-extension",
 	"description" : "Forces the user to confirm the terms of use.",
 	"homepage" : "https://github.com/phpbb-de/phpbb-ext-tou",
-	"version" : "1.0.0",
-	"time" : "2019-10-24",
-	"license" : "GPL-2.0",
+	"version" : "1.0.1-dev",
+	"time" : "2020-01-07",
+	"license" : "GPL-2.0-only",
 	"authors" : [{
 			"name" : "Martin Beckmann",
 			"email" : "gn#36@phpbb.de",

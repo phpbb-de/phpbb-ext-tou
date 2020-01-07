@@ -2,23 +2,23 @@ services:
     phpbbde.tou.main_listener:
         class: phpbbde\tou\event\main
         arguments:
-            - @auth
-            - @config
-            - @controller.helper
-            - @user
-            - @template
-            - %core.root_path%
-            - %core.php_ext%
+            - '@auth'
+            - '@config'
+            - '@controller.helper'
+            - '@user'
+            - '@template'
+            - '%core.root_path%'
+            - '%core.php_ext%'
         tags:
-            - { name: event.listener }
+            - {name: event.listener}
     phpbbde.tou.main_controller:
         class: phpbbde\tou\controller\main
         arguments:
-            - @config
-            - @dbal.conn
-            - @request
-            - @template
-            - @user
-            - @controller.helper
-            - %core.root_path%
-            - %core.php_ext%
+            - '@config'
+            - '@dbal.conn'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@controller.helper'
+            - '%core.root_path%'
+            - '%core.php_ext%'
