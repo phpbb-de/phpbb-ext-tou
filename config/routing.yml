@@ -1,5 +1,5 @@
 phpbbde_tou_main_controller:
-    pattern: /tou/
+    path: /tou/
     defaults:
         _controller: 'phpbbde.tou.main_controller:handle'
         name: ""
