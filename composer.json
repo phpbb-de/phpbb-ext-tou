@@ -17,12 +17,12 @@
 		"php" : ">=5.4.7"
 	},
 	"require-dev" : {
-		"phpbb/epv" : "dev-master"
+		"phing/phing": "2.4.*"
 	},
 	"extra" : {
 		"display-name" : "phpBB.de - Terms of use",
 		"soft-require" : {
-			"phpbb/phpbb" : "3.2.*@dev"
+		  "phpbb/phpbb": ">=3.2.4,<4.0.0@dev"
 		}
 	},
 	"support" : {
