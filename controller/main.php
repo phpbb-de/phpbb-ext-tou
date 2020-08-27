@@ -25,6 +25,9 @@ class main
 	/** @var \phpbb\user */
 	protected $user;
 
+	/* @var \phpbb\language\language */
+	protected $language;
+
 	/** @var \phpbb\controller\helper */
 	protected $helper;
 
@@ -34,7 +37,6 @@ class main
 	/** @var string */
 	protected $php_ext;
 
-
 	/**
 	 * Constructor
 	 *
@@ -43,17 +45,28 @@ class main
 	 * @param \phpbb\request\request $request
 	 * @param \phpbb\template\template $template
 	 * @param \phpbb\user $user
+	 * @param \phpbb\language\language	$language
 	 * @param \phpbb\controller\helper $helper
-	 * @param unknown $root_path
-	 * @param unknown $php_ext
+	 * @param string $root_path
+	 * @param string $php_ext
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext)
+	public function __construct(
+					\phpbb\config\config $config,
+					\phpbb\db\driver\driver_interface $db,
+					\phpbb\request\request $request,
+					\phpbb\template\template $template,
+					\phpbb\user $user,
+					\phpbb\language\language $language,
+					\phpbb\controller\helper $helper,
+					$root_path,
+					$php_ext)
 	{
 		$this->config = $config;
 		$this->request = $request;
 		$this->db = $db;
 		$this->template = $template;
 		$this->user = $user;
+		$this->language = $language;
 		$this->helper = $helper;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
@@ -66,18 +79,18 @@ class main
 	public function handle($name = '')
 	{
 		define('PHPBBDE\TOU\CONTROLLER\IN_TOU', true);
-		$this->user->add_lang('ucp');
-		$this->user->add_lang_ext('phpbbde/tou', 'tou');
+		$this->language->add_lang('ucp');
+		$this->language->add_lang('tou', 'phpbbde/tou');
 
 		// Adding links to the breadcrumbs
 		$this->template->assign_block_vars('navlinks', array(
-			'FORUM_NAME'	=> $this->user->lang['TOU'],
+			'FORUM_NAME'	=> $this->language->lang('TOU'),
 			'U_VIEW_FORUM'	=> $this->helper->route('phpbbde_tou_main_controller'),
 		));
 
 		$this->template->assign_vars(array(
-			'L_TERMS_OF_USE' => sprintf($this->user->lang['TERMS_OF_USE_CONTENT'], $this->config['sitename'], generate_board_url()),
-			'L_REGISTRATION' => $this->user->lang['TOU'],
+			'L_TERMS_OF_USE' => sprintf($this->language->lang('TERMS_OF_USE_CONTENT'), $this->config['sitename'], generate_board_url()),
+			'L_REGISTRATION' => $this->language->lang('TOU'),
 			'S_REGISTRATION' => true,
 			'S_UCP_ACTION' => $this->helper->route('phpbbde_tou_main_controller'),
 		));
@@ -93,8 +106,8 @@ class main
 				WHERE user_id = ' . (int) $this->user->data['user_id'];
 				$this->db->sql_query($sql);
 				$redirect = "{$this->root_path}index.{$this->php_ext}";
-				$message = $this->user->lang['CONFIRM_TOU_REDIRECT'];
-				$l_redirect = $this->user->lang['RETURN_INDEX'];
+				$message = $this->language->lang('CONFIRM_TOU_REDIRECT');
+				$l_redirect = $this->language->lang('RETURN_INDEX');
 
 				// append/replace SID (may change during the session for AOL users)
 				$redirect = reapply_sid($redirect);
@@ -107,13 +120,12 @@ class main
 		else if (isset($_POST['not_agreed']))
 		{
 			//check_form_key('agreement');
-			trigger_error(sprintf($this->user->lang['TOU_DENIED'], $this->config['sitename']));
+			trigger_error(sprintf($this->language->lang('TOU_DENIED'), $this->config['sitename']));
 		}
 
 		add_form_key('agreement');
 
-		//return $this->helper->render('tou_body.html', $this->user->lang['TOU']);
-		return $this->helper->render('ucp_agreement.html', $this->user->lang['TOU']);
+		return $this->helper->render('ucp_agreement.html', $this->language->lang('TOU'));
 	}
 
 }

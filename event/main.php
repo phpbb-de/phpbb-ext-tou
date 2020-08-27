@@ -27,17 +27,50 @@ class main implements EventSubscriberInterface
 		);
 	}
 
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
+	/** @var \phpbb\user */
+	protected $user;
+
+	/* @var \phpbb\language\language */
+	protected $language;
+
+	/** @var \phpbb\controller\helper */
+	protected $helper;
+
+	/** @var string */
+	protected $phpbb_root_path;
+
+	/** @var string */
+	protected $root_path;
+
+	/** @var string */
+	protected $php_ext;
+
 	/**
 	 * Constructor
 	 *
 	 * @param \phpbb\auth\auth			$auth		Auth object
 	 * @param \phpbb\template\template	$template	Template object
 	 * @param \phpbb\controller\helper	$helper 	Helper
+	 * @param \phpbb\language\language	$language
 	 * @param string			$phpbb_root_path		phpBB root path (community/)
 	 * @param string			$php_ext				php file extension (php)
 	 * @param string			$root_path				php file extension (...phpbb.de/)
 	 */
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\user $user, \phpbb\template\template $template, $phpbb_root_path, $php_ext)
+	public function __construct(
+		\phpbb\auth\auth $auth,
+		\phpbb\config\config $config,
+		\phpbb\controller\helper $helper,
+		\phpbb\user $user,
+		\phpbb\language\language $language,
+		\phpbb\template\template $template,
+		$phpbb_root_path,
+		$php_ext)
 	{
 		$this->auth = $auth;
 		$this->config = $config;
@@ -45,6 +78,7 @@ class main implements EventSubscriberInterface
 		$this->helper = $helper;
 		$this->php_ext = $php_ext;
 		$this->user = $user;
+		$this->language =$language;
 		$this->template = $template;
 	}
 
@@ -53,9 +87,9 @@ class main implements EventSubscriberInterface
 		// Replace Language Variable for registration:
 		// TODO: Maybe make this controllable via ACP.
 		// VALUES SET HERE WILL OVERWRITE ALL LOCATIONS WHERE THE VARIABLE IS ACTUALLY USED!
-		$this->user->add_lang('ucp');
-		$this->template->assign_var('L_PRIVACY_POLICY_TEXT', sprintf($this->user->lang['PRIVACY_POLICY'], $this->config['sitename'], generate_board_url()));
-		$this->template->assign_var('L_TERMS_OF_USE', sprintf($this->user->lang['TERMS_OF_USE_CONTENT'], $this->config['sitename'], generate_board_url()));
+		$this->language->add_lang('ucp');
+		$this->template->assign_var('L_PRIVACY_POLICY_TEXT', sprintf($this->language->lang('PRIVACY_POLICY'), $this->config['sitename'], generate_board_url()));
+		$this->template->assign_var('L_TERMS_OF_USE', sprintf($this->language->lang('TERMS_OF_USE_CONTENT'), $this->config['sitename'], generate_board_url()));
 		//$this->template->assign_var('L_TERMS_OF_USE', 'TEST');
 
 		if (version_compare($this->user->data['user_tou_version'], $this->config['tou_version'], 'eq') || $this->user->data['is_bot'] || !$this->user->data['is_registered'])
@@ -70,7 +104,7 @@ class main implements EventSubscriberInterface
 		}
 
 		// At this point we have a registered user who did not accept the newest TOU.
-		redirect($this->helper->route('phpbbde_tou_main_controller'));
+		redirect($this->helper->route('phpbbde_tou_main_controller', [], false, false, \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
 	}
 
 	public function user_add_modify($event)

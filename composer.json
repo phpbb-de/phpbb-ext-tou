@@ -3,9 +3,9 @@
 	"type" : "phpbb-extension",
 	"description" : "Forces the user to confirm the terms of use.",
 	"homepage" : "https://github.com/phpbb-de/phpbb-ext-tou",
-	"version" : "1.0.0",
-	"time" : "2015-03-21",
-	"license" : "GPL-2.0",
+	"version" : "1.0.1-dev",
+	"time" : "2020-01-07",
+	"license" : "GPL-2.0-only",
 	"authors" : [{
 			"name" : "Martin Beckmann",
 			"email" : "gn#36@phpbb.de",
@@ -14,15 +14,15 @@
 		}
 	],
 	"require" : {
-		"php" : ">=5.3.3"
+		"php" : ">=5.4.7"
 	},
 	"require-dev" : {
-		"phpbb/epv" : "dev-master"
+		"phing/phing": "2.4.*"
 	},
 	"extra" : {
 		"display-name" : "phpBB.de - Terms of use",
 		"soft-require" : {
-			"phpbb/phpbb" : "3.1.*@dev"
+		  "phpbb/phpbb": ">=3.2.4,<4.0.0@dev"
 		}
 	},
 	"support" : {
