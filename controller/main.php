@@ -142,6 +142,8 @@ class main
 			'S_HIDDEN_FIELDS'	=> build_hidden_fields($s_hidden_fields),
 			'COOKIE_NAME'		=> $this->config['cookie_name'],
 			'COOKIE_PATH'		=> $this->config['cookie_path'],
+
+			'HAS_ALREADY_AGREED' => version_compare($this->user->data['user_tou_version'], $this->config['tou_version'], 'eq'),
 		));
 
 		if ($this->request->is_set_post('agreed'))
