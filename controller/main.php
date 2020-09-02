@@ -88,14 +88,29 @@ class main
 			'U_VIEW_FORUM'	=> $this->helper->route('phpbbde_tou_main_controller'),
 		));
 
+		// Checking amount of available languages
+		$sql = 'SELECT lang_id
+				FROM ' . LANG_TABLE;
+		$result = $this->db->sql_query($sql);
+
+		$lang_row = array();
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$lang_row[] = $row;
+		}
+		$this->db->sql_freeresult($result);
+
+		// Check for user language
+		$user_lang		= $this->request->variable('lang', $this->user->lang_name);
+
 		$this->template->assign_vars(array(
-			'L_TERMS_OF_USE' => sprintf($this->language->lang('TERMS_OF_USE_CONTENT'), $this->config['sitename'], generate_board_url()),
-			'L_REGISTRATION' => $this->language->lang('TOU'),
-			'S_REGISTRATION' => true,
+			'L_TERMS_OF_USE' => $this->language->lang('TERMS_OF_USE_CONTENT', $this->config['sitename'], generate_board_url()),
+			'L_PRIVACY_POLICY' => $this->language->lang('PRIVACY_POLICY', $this->config['sitename'], generate_board_url()),
 			'S_UCP_ACTION' => $this->helper->route('phpbbde_tou_main_controller'),
+			'S_LANG_OPTIONS'	=> (count($lang_row) > 1) ? language_select($user_lang) : '',
 		));
 
-		if (isset($_POST['agreed']))
+		if ($this->request->is_set_post('agreed'))
 		{
 			if ( check_form_key('agreement'))
 			{
@@ -105,8 +120,11 @@ class main
 						user_tou_confirmip = \'' . $this->user->ip . '\'
 				WHERE user_id = ' . (int) $this->user->data['user_id'];
 				$this->db->sql_query($sql);
+
 				$redirect = "{$this->root_path}index.{$this->php_ext}";
+
 				$message = $this->language->lang('CONFIRM_TOU_REDIRECT');
+
 				$l_redirect = $this->language->lang('RETURN_INDEX');
 
 				// append/replace SID (may change during the session for AOL users)
@@ -117,15 +135,14 @@ class main
 			}
 			trigger_error('INVALID_FORM');
 		}
-		else if (isset($_POST['not_agreed']))
+		else if ($this->request->is_set_post('not_agreed'))
 		{
-			//check_form_key('agreement');
-			trigger_error(sprintf($this->language->lang('TOU_DENIED'), $this->config['sitename']));
+			trigger_error($this->language->lang('TOU_DENIED', $this->config['sitename']));
 		}
 
 		add_form_key('agreement');
 
-		return $this->helper->render('ucp_agreement.html', $this->language->lang('TOU'));
+		return $this->helper->render('tou_body.html', $this->language->lang('TOU'));
 	}
 
 }
