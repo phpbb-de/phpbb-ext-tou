@@ -30,6 +30,9 @@ class main implements EventSubscriberInterface
 	/** @var \phpbb\auth\auth */
 	protected $auth;
 
+	/** @var \phpbb\config\config */
+	protected $config;
+
 	/** @var \phpbb\template\template */
 	protected $template;
 
@@ -54,13 +57,14 @@ class main implements EventSubscriberInterface
 	/**
 	 * Constructor
 	 *
-	 * @param \phpbb\auth\auth			$auth		Auth object
-	 * @param \phpbb\template\template	$template	Template object
-	 * @param \phpbb\controller\helper	$helper 	Helper
-	 * @param \phpbb\language\language	$language
-	 * @param string			$phpbb_root_path		phpBB root path (community/)
-	 * @param string			$php_ext				php file extension (php)
-	 * @param string			$root_path				php file extension (...phpbb.de/)
+	 * @param \phpbb\auth\auth					$auth		Auth object
+	 * @param \phpbb\config\config 				$config
+	 * @param \phpbb\template\template			$template	Template object
+	 * @param \phpbb\controller\helper			$helper 	Helper
+	 * @param \phpbb\language\language			$language
+	 * @param string							$phpbb_root_path		phpBB root path (community/)
+	 * @param string							$php_ext				php file extension (php)
+	 * @param string							$root_path				php file extension (...phpbb.de/)
 	 */
 	public function __construct(
 		\phpbb\auth\auth $auth,
@@ -85,18 +89,15 @@ class main implements EventSubscriberInterface
 	public function page_header($event)
 	{
 		// Replace Language Variable for registration:
-		// TODO: Maybe make this controllable via ACP.
 		// VALUES SET HERE WILL OVERWRITE ALL LOCATIONS WHERE THE VARIABLE IS ACTUALLY USED!
 		$this->language->add_lang('ucp');
-		$this->template->assign_var('L_PRIVACY_POLICY_TEXT', sprintf($this->language->lang('PRIVACY_POLICY'), $this->config['sitename'], generate_board_url()));
-		$this->template->assign_var('L_TERMS_OF_USE', sprintf($this->language->lang('TERMS_OF_USE_CONTENT'), $this->config['sitename'], generate_board_url()));
-		//$this->template->assign_var('L_TERMS_OF_USE', 'TEST');
+		$this->template->assign_var('L_PRIVACY_POLICY', $this->language->lang('PRIVACY_POLICY', $this->config['sitename'], generate_board_url()));
+		$this->template->assign_var('L_TERMS_OF_USE', $this->language->lang('TERMS_OF_USE_CONTENT', $this->config['sitename'], generate_board_url()));
 
 		if (version_compare($this->user->data['user_tou_version'], $this->config['tou_version'], 'eq') || $this->user->data['is_bot'] || !$this->user->data['is_registered'])
 		{
 			return;
 		}
-
 		// If we are already showing the TOU, obviously we don't need to redirect there
 		if (defined('PHPBBDE\TOU\CONTROLLER\IN_TOU'))
 		{
