@@ -34,9 +34,23 @@ class v101 extends \phpbb\db\migration\migration
 					'ACP_TOU_TITLE',
 					array(
 						'module_basename'	=> '\phpbbde\tou\acp\tou_module',
-						'modes'				=> array('settings'),
+						'modes'				=> array('settings', 'tousetup', 'ppsetup'),
 					),
 				)),
+			// Add new config values
+			array('config.add', array('tou_use_custom_tou', 0)),
+			array('config.add', array('tou_use_custom_pp', 0)),
+
+			// Add new config text values
+			array('config_text.add', array('tou_custom_tou_text', '')),
+			array('config_text.add', array('tou_custom_tou_uid', '')),
+			array('config_text.add', array('tou_custom_tou_bitfield', '')),
+			array('config_text.add', array('tou_custom_tou_flags', OPTION_FLAG_BBCODE + OPTION_FLAG_SMILIES + OPTION_FLAG_LINKS)),
+
+			array('config_text.add', array('tou_custom_pp_text', '')),
+			array('config_text.add', array('tou_custom_pp_uid', '')),
+			array('config_text.add', array('tou_custom_pp_bitfield', '')),
+			array('config_text.add', array('tou_custom_pp_flags', OPTION_FLAG_BBCODE + OPTION_FLAG_SMILIES + OPTION_FLAG_LINKS)),
 		);
 		return $data;
 	}

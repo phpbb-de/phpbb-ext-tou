@@ -31,4 +31,38 @@ $lang = array_merge($lang, array(
 	'ACP_TOU_VERSION_EXPLAIN' 			=> 'Every user, who has a lesser value than here defined, needs to agree to the terms of use on his next board visit. You need to input positive integer values.',
 
 	'ACP_TOU_SETTINGS_UPDATED'			=> 'The settings of „Terms of Use“ were updated.',
+
+	// Custom TOU setup
+	'ACP_TOU_TOU_UPDATED'			=> 'The „Terms of Use“ was updated.',
+
+	'ACP_TOU_TOUSETUP_TITLE'			=> 'Setup custom „Terms of Use“',
+	'ACP_TOU_TOUSETUP_TITLE_EXPLAIN'	=> '',
+
+	'ACP_TOU_TOUSETUP_FIELDSET'			=> 'Options',
+	'ACP_TOU_TOUSETUP_FIELDSET_EXPLAIN'	=> '',
+
+	'ACP_TOU_INFO_PREVIEW_TOU' 				=> '„Terms of Use“ preview',
+
+	'ACP_TOU_TOUSETUP_USE_CUSTOM'			=> 'Use custom „Terms of Use“',
+	'ACP_TOU_TOUSETUP_USE_CUSTOM_EXPLAIN'	=> 'If activated, the below inputed „Terms of Use“ will be used instead of the original phpBB core version.',
+
+	'ACP_TOU_TEXT_INPUT_TOU'				=> 'Add „Terms of Use“ text',
+	'ACP_TOU_TEXT_INPUT_TOU_EXPLAIN'		=> 'Input your custom „Terms of Use“ here in that input field.',
+
+	 // Custom PP setup
+	'ACP_TOU_PP_UPDATED'			=> 'The „Privacy policy“ was updated.',
+
+	'ACP_TOU_PPSETUP_TITLE'			=> 'Setup custom „Privacy policy“',
+	'ACP_TOU_PPSETUP_TITLE_EXPLAIN'	=> '',
+
+	'ACP_TOU_PPSETUP_FIELDSET'			=> 'Options',
+	'ACP_TOU_PPSETUP_FIELDSET_EXPLAIN'	=> '',
+
+	'ACP_TOU_INFO_PREVIEW_PP' 				=> '„Privacy policy“ preview',
+
+	'ACP_TOU_PPSETUP_USE_CUSTOM'			=> 'Use custom „Privacy policy“',
+	'ACP_TOU_PPSETUP_USE_CUSTOM_EXPLAIN'	=> 'If activated, the below inputed „Privacy policy“ will be used instead of the original phpBB core version.',
+
+	'ACP_TOU_TEXT_INPUT_PP'				=> 'Add „Privacy policy“ text',
+	'ACP_TOU_TEXT_INPUT_PP_EXPLAIN'		=> 'Input your custom „Privacy policy“ here in that input field.',
 ));

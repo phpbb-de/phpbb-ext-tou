@@ -31,4 +31,8 @@ $lang = array_merge($lang, array(
 	'ACP_TOU_VERSION_EXPLAIN' 			=> 'Jeder Benutzer, der einen geringeren Wert, als hier definiert, hat, muss die Nutzungsbedingungen beim nächsten Besuch des Forums bestätigen. Es müssen ganzzahlige, positive Werte eingegeben werden',
 
 	'ACP_TOU_SETTINGS_UPDATED'			=> 'Die Einstellung von „Terms of Use“ wurden aktualisiert.',
+
+	// Custom TOU and PP setup pages
+	'ACP_TOU_TOU_UPDATED'			=> 'Die „Nutzungsbedingungen“ wurde aktualisiert.',
+	'ACP_TOU_PP_UPDATED'			=> 'Die „Datenschutzerklärung“ wurde aktualisiert.',
 ));

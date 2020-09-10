@@ -22,6 +22,14 @@ class tou_info
 						'title' => 'ACP_TOU_SETTINGS',
 						'cat' => array('ACP_TOU_TITLE')
 					),
+				'tousetup'	=> array(
+					'title' => 'ACP_TOU_TOUSETUP',
+					'cat' => array('ACP_TOU_TITLE')
+				),
+				'ppsetup'	=> array(
+					'title' => 'ACP_TOU_PPSETUP',
+					'cat' => array('ACP_TOU_TITLE')
+				),
 			),
 		);
 	}
