@@ -1,0 +1,79 @@
+{% include 'overall_header.html' %}
+
+<script type="text/javascript">
+	// <![CDATA[
+
+	var form_name = 'acp_tou_ppsetup';
+	var text_name = 'tou_custom_pp_text';
+	var load_draft = false;
+	var upload = false;
+	var imageTag = false;
+
+	// ]]>
+</script>
+
+<a id="maincontent"></a>
+
+<h1>{{ lang('ACP_TOU_PPSETUP_TITLE') }}</h1>
+
+<p>{{ lang('ACP_TOU_PPSETUP_TITLE_EXPLAIN') }}</p>
+
+<form id="acp_tou_ppsetup" method="post" action="{{ U_ACTION }}">
+	<fieldset>
+		<legend>{{ lang('ACP_TOU_PPSETUP_FIELDSET')}}</legend>
+		<p>{{ lang('ACP_TOU_PPSETUP_FIELDSET_EXPLAIN')}}</p>
+
+		<dl>
+			<dt><label for="tou_use_custom_pp">{{ lang('ACP_TOU_PPSETUP_USE_CUSTOM')}}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_TOU_PPSETUP_USE_CUSTOM_EXPLAIN')}}</span></dt>
+			<dd>
+				<label><input type="radio" class="radio" id="tou_use_custom_pp" name="tou_use_custom_pp" value="1" {% if ACP_TOU_USE_CUSTOM_PP_ENABLED %}checked="checked"{% endif %}/> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="tou_use_custom_pp" value="0" {% if not ACP_TOU_USE_CUSTOM_PP_ENABLED %}checked="checked"{% endif %}/> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+
+	</fieldset>
+
+	{% if ACP_TOU_TOU_PREVIEW %}
+	<fieldset>
+		<legend>{{ lang('ACP_TOU_INFO_PREVIEW_PP') }}</legend>
+		<p>{{ ACP_TOU_PREVIEW_OUTPUT }}</p>
+	</fieldset>
+	{% endif %}
+
+	<fieldset>
+		<legend>{{ lang('ACP_TOU_TEXT_INPUT_PP') }}</legend>
+		<p>{{ lang('ACP_TOU_TEXT_INPUT_PP_EXPLAIN') }}</p>
+
+		{% include 'acp_posting_buttons.html' %}
+
+		<dl class="responsive-columns">
+			<dt style="width: 90px;" id="color_palette_placeholder" data-orientation="v" data-height="12" data-width="15" data-bbcode="true">
+			</dt>
+
+			<dd style="margin-{{ S_CONTENT_FLOW_BEGIN }}: 90px;">
+				<textarea name="tou_custom_pp_text" rows="10" cols="60" style="width: 95%;" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" data-bbcode="true">{{ ACP_TOU_CUSTOM_PP_TEXT }}</textarea>
+			</dd>
+
+			<dd style="margin-{S_CONTENT_FLOW_BEGIN}: 90px; margin-top: 5px;">
+				{% if S_BBCODE_ALLOWED %}
+				<label><input type="checkbox" class="radio" name="disable_bbcode"{% if S_BBCODE_DISABLE_CHECKED %} checked="checked"{% endif %} /> {{ lang('DISABLE_BBCODE') }}</label>
+				{% endif %}
+				{% if S_SMILIES_ALLOWED %}
+				<label><input type="checkbox" class="radio" name="disable_smilies"{% if S_SMILIES_DISABLE_CHECKED %} checked="checked"{% endif %} /> {{ lang('DISABLE_SMILIES') }}</label>
+				{% endif %}
+				{% if S_LINKS_ALLOWED %}
+				<label><input type="checkbox" class="radio" name="disable_magic_url"{% if S_MAGIC_URL_DISABLE_CHECKED %} checked="checked"{% endif %} /> {{ lang('DISABLE_MAGIC_URL') }}</label>
+				{% endif %}
+			</dd>
+			<dd style="margin-{S_CONTENT_FLOW_BEGIN}: 90px; margin-top: 10px;"><strong>{{ lang('OPTIONS') }}{{ lang('COLON') }} </strong>{{ BBCODE_STATUS }} :: {{ IMG_STATUS }} :: {{ FLASH_STATUS }} :: {{ URL_STATUS }} :: {{ SMILIES_STATUS }}</dd>
+		</dl>
+	</fieldset>
+
+	<fieldset class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />
+		<input class="button2" type="submit" name="preview" value="{{ lang('PREVIEW') }}" />
+		{{ S_FORM_TOKEN }}
+	</fieldset>
+</form>
+
+{% include 'overall_footer.html' %}

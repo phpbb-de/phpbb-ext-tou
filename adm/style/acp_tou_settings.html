@@ -16,6 +16,22 @@
 			<dd><input id="phpbbde_tou_version" type="number" min="1" max="9999" name="phpbbde_tou_version" value="{{ ACP_TOU_VERSION_VALUE }}"></dd>
 		</dl>
 
+		<dl>
+			<dt><label for="tou_use_custom_tou">{{ lang('ACP_TOU_TOUSETUP_USE_CUSTOM')}}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_TOU_TOUSETUP_USE_CUSTOM_EXPLAIN')}}</span></dt>
+			<dd>
+				<label><input type="radio" class="radio" id="tou_use_custom_tou" name="tou_use_custom_tou" value="1" {% if ACP_TOU_USE_CUSTOM_TOU_ENABLED %}checked="checked"{% endif %}/> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="tou_use_custom_tou" value="0" {% if not ACP_TOU_USE_CUSTOM_TOU_ENABLED %}checked="checked"{% endif %}/> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+
+		<dl>
+			<dt><label for="tou_use_custom_pp">{{ lang('ACP_TOU_PPSETUP_USE_CUSTOM')}}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_TOU_PPSETUP_USE_CUSTOM_EXPLAIN')}}</span></dt>
+			<dd>
+				<label><input type="radio" class="radio" id="tou_use_custom_pp" name="tou_use_custom_pp" value="1" {% if ACP_TOU_USE_CUSTOM_PP_ENABLED %}checked="checked"{% endif %}/> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="tou_use_custom_pp" value="0" {% if not ACP_TOU_USE_CUSTOM_PP_ENABLED %}checked="checked"{% endif %}/> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+
 	</fieldset>
 
 	<fieldset class="submit-buttons">

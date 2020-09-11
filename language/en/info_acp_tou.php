@@ -24,4 +24,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ACP_TOU_TITLE' 	=> 'Terms of Use',
 	'ACP_TOU_SETTINGS' 	=> 'Settings',
+
+	'ACP_TOU_TOUSETUP'	=> 'Add custom Terms of Use',
+	'ACP_TOU_PPSETUP'	=> 'Add custom Privacy Policy',
 ));

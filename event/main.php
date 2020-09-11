@@ -33,6 +33,9 @@ class main implements EventSubscriberInterface
 	/** @var \phpbb\config\config */
 	protected $config;
 
+	/** @var \phpbb\config\db_text */
+	protected $config_text;
+
 	/** @var \phpbb\template\template */
 	protected $template;
 
@@ -59,6 +62,7 @@ class main implements EventSubscriberInterface
 	 *
 	 * @param \phpbb\auth\auth					$auth		Auth object
 	 * @param \phpbb\config\config 				$config
+	 * @param \phpbb\config\db_text				$config_text
 	 * @param \phpbb\template\template			$template	Template object
 	 * @param \phpbb\controller\helper			$helper 	Helper
 	 * @param \phpbb\language\language			$language
@@ -69,6 +73,7 @@ class main implements EventSubscriberInterface
 	public function __construct(
 		\phpbb\auth\auth $auth,
 		\phpbb\config\config $config,
+		\phpbb\config\db_text $config_text,
 		\phpbb\controller\helper $helper,
 		\phpbb\user $user,
 		\phpbb\language\language $language,
@@ -78,6 +83,7 @@ class main implements EventSubscriberInterface
 	{
 		$this->auth = $auth;
 		$this->config = $config;
+		$this->config_text = $config_text;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->helper = $helper;
 		$this->php_ext = $php_ext;
@@ -91,8 +97,52 @@ class main implements EventSubscriberInterface
 		// Replace Language Variable for registration:
 		// VALUES SET HERE WILL OVERWRITE ALL LOCATIONS WHERE THE VARIABLE IS ACTUALLY USED!
 		$this->language->add_lang('ucp');
-		$this->template->assign_var('L_PRIVACY_POLICY', $this->language->lang('PRIVACY_POLICY', $this->config['sitename'], generate_board_url()));
-		$this->template->assign_var('L_TERMS_OF_USE', $this->language->lang('TERMS_OF_USE_CONTENT', $this->config['sitename'], generate_board_url()));
+		// Check for custom Terms of use and display it instead of core variable
+		if ($this->config['tou_use_custom_tou'])
+		{
+			$tou_data = $this->config_text->get_array(array(
+				'tou_custom_tou_text',
+				'tou_custom_tou_uid',
+				'tou_custom_tou_bitfield',
+				'tou_custom_tou_flags',
+			));
+
+			$tou_custom_tou_text = generate_text_for_display(
+				$tou_data['tou_custom_tou_text'],
+				$tou_data['tou_custom_tou_uid'],
+				$tou_data['tou_custom_tou_bitfield'],
+				$tou_data['tou_custom_tou_flags']
+			);
+
+			$this->template->assign_var('L_TERMS_OF_USE', $this->language->lang($tou_custom_tou_text, $this->config['sitename'], generate_board_url()));
+		}
+		else
+		{
+			$this->template->assign_var('L_TERMS_OF_USE', $this->language->lang('TERMS_OF_USE_CONTENT', $this->config['sitename'], generate_board_url()));
+		}
+		// Check for custom Privacy Policy and display it instead of core variable
+		if ($this->config['tou_use_custom_pp'])
+		{
+			$pp_data = $this->config_text->get_array(array(
+				'tou_custom_pp_text',
+				'tou_custom_pp_uid',
+				'tou_custom_pp_bitfield',
+				'tou_custom_pp_flags',
+			));
+
+			$tou_custom_pp_text = generate_text_for_display(
+				$pp_data['tou_custom_pp_text'],
+				$pp_data['tou_custom_pp_uid'],
+				$pp_data['tou_custom_pp_bitfield'],
+				$pp_data['tou_custom_pp_flags']
+			);
+
+			$this->template->assign_var('L_PRIVACY_POLICY', $this->language->lang($tou_custom_pp_text, $this->config['sitename'], generate_board_url()));
+		}
+		else
+		{
+			$this->template->assign_var('L_PRIVACY_POLICY', $this->language->lang('PRIVACY_POLICY', $this->config['sitename'], generate_board_url()));
+		}
 
 		if (version_compare($this->user->data['user_tou_version'], $this->config['tou_version'], 'eq') || $this->user->data['is_bot'] || !$this->user->data['is_registered'])
 		{

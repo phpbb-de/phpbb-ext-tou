@@ -138,7 +138,7 @@ class main
 
 			'S_UCP_ACTION' => $this->helper->route('phpbbde_tou_main_controller'),
 
-			'S_LANG_OPTIONS'	=> (count($lang_row) > 1) ? language_select($user_lang) : '',
+			'S_LANG_OPTIONS'	=> (count($lang_row) > 1 && !($this->config['tou_use_custom_tou'] || $this->config['tou_use_custom_pp'])) ? language_select($user_lang) : '',
 			'S_HIDDEN_FIELDS'	=> build_hidden_fields($s_hidden_fields),
 			'COOKIE_NAME'		=> $this->config['cookie_name'],
 			'COOKIE_PATH'		=> $this->config['cookie_path'],
