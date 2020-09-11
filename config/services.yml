@@ -25,3 +25,9 @@ services:
             - '@controller.helper'
             - '%core.root_path%'
             - '%core.php_ext%'
+    phpbbde.tou.listener:
+        class: phpbbde\tou\event\permission_listener
+        arguments:
+            - '@auth'
+        tags:
+            - { name: event.listener }

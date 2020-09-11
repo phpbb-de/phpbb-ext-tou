@@ -51,9 +51,35 @@ class v110 extends \phpbb\db\migration\migration
 			array('config_text.add', array('tou_custom_pp_uid', '')),
 			array('config_text.add', array('tou_custom_pp_bitfield', '')),
 			array('config_text.add', array('tou_custom_pp_flags', OPTION_FLAG_BBCODE + OPTION_FLAG_SMILIES + OPTION_FLAG_LINKS)),
-
+			// Add permissions
+			array('permission.add', array('a_tou_manage', true)),
+			// Add config version
 			array('config.add', array('tou_ext_version', '1.1.0')),
 		);
+
+		// Check if admin role exists and assign permission to admin role
+		if ($this->role_exists('ROLE_ADMIN_FULL'))
+		{
+			$data[] = array('permission.permission_set', array('ROLE_ADMIN_FULL', 'a_tou_manage', 'role', true));
+		}
 		return $data;
+	}
+
+	/**
+	 * Checks whether the given role does exist or not.
+	 *
+	 * @param String $role the name of the role
+	 * @return true if the role exists, false otherwise
+	 * Source: https://github.com/paul999/mention/
+	 */
+	private function role_exists($role)
+	{
+		$sql = 'SELECT role_id
+		FROM ' . ACL_ROLES_TABLE . "
+		WHERE role_name = '" . $this->db->sql_escape($role) . "'";
+		$result = $this->db->sql_query_limit($sql, 1);
+		$role_id = $this->db->sql_fetchfield('role_id');
+		$this->db->sql_freeresult($result);
+		return $role_id;
 	}
 }
