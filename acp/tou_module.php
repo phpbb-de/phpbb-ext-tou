@@ -30,7 +30,7 @@ class tou_module
 	protected $request;
 	protected $template;
 	protected $user;
-	protected $root_path;
+	protected $phpbb_root_path;
 	protected $php_ext;
 
 	public function main($id, $mode)
@@ -77,6 +77,8 @@ class tou_module
 					if (empty($error) && $this->request->is_set_post('submit'))
 					{
 						$this->config->set('tou_version', $this->request->variable('phpbbde_tou_version', 0));
+						$this->config->set('tou_use_custom_tou', $this->request->variable('tou_use_custom_tou', false));
+						$this->config->set('tou_use_custom_pp', $this->request->variable('tou_use_custom_pp', false));
 
 						trigger_error($this->language->lang('ACP_TOU_SETTINGS_UPDATED') . adm_back_link($this->u_action));
 					}
@@ -87,6 +89,8 @@ class tou_module
 					'U_ACTION'								=> $this->u_action,
 
 					'ACP_TOU_VERSION_VALUE'				=> $this->config['tou_version'],
+					'ACP_TOU_USE_CUSTOM_TOU_ENABLED'		=> $this->config['tou_use_custom_tou'],
+					'ACP_TOU_USE_CUSTOM_PP_ENABLED'			=> $this->config['tou_use_custom_pp'],
 				));
 			break;
 
@@ -208,26 +212,97 @@ class tou_module
 				add_form_key($form_name);
 				$error = '';
 
-				if ($this->request->is_set_post('submit'))
+				// Check for possible missing functions
+				if (!function_exists('display_custom_bbcodes'))
+				{
+					include $this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext;
+				}
+
+				if (!class_exists('parse_message'))
+				{
+					include $this->phpbb_root_path . 'includes/message_parser.' . $this->php_ext;
+				}
+
+				// Get all tou data from the config_text table in the database
+				$pp_data = $this->config_text->get_array(array(
+					'tou_custom_pp_text',
+					'tou_custom_pp_uid',
+					'tou_custom_pp_bitfield',
+					'tou_custom_pp_flags',
+				));
+
+				$tou_custom_pp_text		= $pp_data['tou_custom_pp_text'];
+				$tou_custom_pp_uid			= $pp_data['tou_custom_pp_uid'];
+				$tou_custom_pp_bitfield	= $pp_data['tou_custom_pp_bitfield'];
+				$tou_custom_pp_flags		= $pp_data['tou_custom_pp_flags'];
+
+				if ($this->request->is_set_post('submit') || $request->is_set_post('preview'))
 				{
 					if (!check_form_key($form_name))
 					{
 						$error = $this->language->lang('FORM_INVALID');
 					}
 
+					$tou_custom_pp_text = $request->variable('tou_custom_pp_text', '', true);
+
+					generate_text_for_storage(
+						$tou_custom_pp_text,
+						$tou_custom_pp_uid,
+						$tou_custom_pp_bitfield,
+						$tou_custom_pp_flags,
+						!$request->variable('disable_bbcode', false),
+						!$request->variable('disable_magic_url', false),
+						!$request->variable('disable_smilies', false)
+					);
+
 					if (empty($error) && $this->request->is_set_post('submit'))
 					{
 						$this->config->set('tou_use_custom_pp', $this->request->variable('tou_use_custom_pp', false));
 
+						// Store the data to the config_table in the database
+						$this->config_text->set_array(array(
+							'tou_custom_pp_text'			=> $tou_custom_pp_text,
+							'tou_custom_pp_uid'			=> $tou_custom_pp_uid,
+							'tou_custom_pp_bitfield'		=> $tou_custom_pp_bitfield,
+							'tou_custom_pp_flags'			=> $tou_custom_pp_flags,
+						));
+
 						trigger_error($this->language->lang('ACP_TOU_SETTINGS_UPDATED') . adm_back_link($this->u_action));
 					}
 				}
+
+				$tou_preview_pp = '';
+
+				if ($request->is_set_post('preview'))
+				{
+					$tou_preview_pp = generate_text_for_display($tou_custom_pp_text, $tou_custom_pp_uid, $tou_custom_pp_bitfield, $tou_custom_pp_flags);
+				}
+				$tou_edit_pp = generate_text_for_edit($tou_custom_pp_text, $tou_custom_pp_uid, $tou_custom_pp_flags);
 
 				$this->template->assign_vars(array(
 					'ERRORS'								=> $error,
 					'U_ACTION'								=> $this->u_action,
 
 					'ACP_TOU_USE_CUSTOM_PP_ENABLED'			=> $this->config['tou_use_custom_pp'],
+
+					'ACP_TOU_CUSTOM_PP_TEXT' 				=> $tou_edit_pp['text'],
+					'ACP_TOU_PREVIEW_PP'					=> $tou_preview_pp,
+
+					'S_BBCODE_DISABLE_CHECKED'		=> !$tou_edit_pp['allow_bbcode'],
+					'S_MAGIC_URL_DISABLE_CHECKED'	=> !$tou_edit_pp['allow_urls'],
+					'S_SMILIES_DISABLE_CHECKED'		=> !$tou_edit_pp['allow_smilies'],
+
+					'BBCODE_STATUS'					=> $language->lang('BBCODE_IS_ON', '<a href="' . $phpbb_container->get('controller.helper')->route('phpbb_help_bbcode_controller') . '">', '</a>'),
+					'FLASH_STATUS'					=> $language->lang('FLASH_IS_ON'),
+					'IMG_STATUS'					=> $language->lang('IMAGES_ARE_ON'),
+					'SMILIES_STATUS'				=> $language->lang('SMILIES_ARE_ON'),
+					'URL_STATUS'					=> $language->lang('URL_IS_ON'),
+
+					'S_BBCODE_ALLOWED'				=> true,
+					'S_BBCODE_FLASH'				=> true,
+					'S_BBCODE_IMG'					=> true,
+					'S_LINKS_ALLOWED'				=> true,
+					'S_SMILIES_ALLOWED'				=> true,
 				));
 			break;
 

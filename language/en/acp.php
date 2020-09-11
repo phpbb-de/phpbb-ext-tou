@@ -33,18 +33,18 @@ $lang = array_merge($lang, array(
 	'ACP_TOU_SETTINGS_UPDATED'			=> 'The settings of „Terms of Use“ were updated.',
 
 	// Custom TOU setup
-	'ACP_TOU_TOU_UPDATED'			=> 'The „Terms of Use“ was updated.',
+	'ACP_TOU_TOU_UPDATED'			=> 'The „Terms of Use“ were updated.',
 
 	'ACP_TOU_TOUSETUP_TITLE'			=> 'Setup custom „Terms of Use“',
-	'ACP_TOU_TOUSETUP_TITLE_EXPLAIN'	=> '',
+	'ACP_TOU_TOUSETUP_TITLE_EXPLAIN'	=> 'The within phpBB included „Terms of Use“ is a generic version, which should be changed to fit your needs and board configuration.',
 
 	'ACP_TOU_TOUSETUP_FIELDSET'			=> 'Options',
-	'ACP_TOU_TOUSETUP_FIELDSET_EXPLAIN'	=> '',
+	'ACP_TOU_TOUSETUP_FIELDSET_EXPLAIN'	=> 'Change several options for the „Terms of Use“.',
 
 	'ACP_TOU_INFO_PREVIEW_TOU' 				=> '„Terms of Use“ preview',
 
 	'ACP_TOU_TOUSETUP_USE_CUSTOM'			=> 'Use custom „Terms of Use“',
-	'ACP_TOU_TOUSETUP_USE_CUSTOM_EXPLAIN'	=> 'If activated, the below inputed „Terms of Use“ will be used instead of the original phpBB core version.',
+	'ACP_TOU_TOUSETUP_USE_CUSTOM_EXPLAIN'	=> 'If activated, the below registered „Terms of Use“ will be used instead of the original phpBB core version.',
 
 	'ACP_TOU_TEXT_INPUT_TOU'				=> 'Add „Terms of Use“ text',
 	'ACP_TOU_TEXT_INPUT_TOU_EXPLAIN'		=> 'Input your custom „Terms of Use“ here in that input field.',
@@ -53,10 +53,10 @@ $lang = array_merge($lang, array(
 	'ACP_TOU_PP_UPDATED'			=> 'The „Privacy policy“ was updated.',
 
 	'ACP_TOU_PPSETUP_TITLE'			=> 'Setup custom „Privacy policy“',
-	'ACP_TOU_PPSETUP_TITLE_EXPLAIN'	=> '',
+	'ACP_TOU_PPSETUP_TITLE_EXPLAIN'	=> 'The within phpBB included „Privacy policy“ is a generic version, which should be changed to fit your needs and board configuration.',
 
 	'ACP_TOU_PPSETUP_FIELDSET'			=> 'Options',
-	'ACP_TOU_PPSETUP_FIELDSET_EXPLAIN'	=> '',
+	'ACP_TOU_PPSETUP_FIELDSET_EXPLAIN'	=> 'Change several options for the „Privacy policy“.',
 
 	'ACP_TOU_INFO_PREVIEW_PP' 				=> '„Privacy policy“ preview',
 

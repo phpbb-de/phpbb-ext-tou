@@ -96,6 +96,7 @@ class main implements EventSubscriberInterface
 	{
 		// Replace Language Variable for registration:
 		// VALUES SET HERE WILL OVERWRITE ALL LOCATIONS WHERE THE VARIABLE IS ACTUALLY USED!
+		$this->language->add_lang('ucp');
 		// Check for custom Terms of use and display it instead of core variable
 		if ($this->config['tou_use_custom_tou'])
 		{
@@ -117,7 +118,6 @@ class main implements EventSubscriberInterface
 		}
 		else
 		{
-			$this->language->add_lang('ucp');
 			$this->template->assign_var('L_TERMS_OF_USE', $this->language->lang('TERMS_OF_USE_CONTENT', $this->config['sitename'], generate_board_url()));
 		}
 		// Check for custom Privacy Policy and display it instead of core variable
@@ -141,7 +141,6 @@ class main implements EventSubscriberInterface
 		}
 		else
 		{
-			$this->language->add_lang('ucp');
 			$this->template->assign_var('L_PRIVACY_POLICY', $this->language->lang('PRIVACY_POLICY', $this->config['sitename'], generate_board_url()));
 		}
 
