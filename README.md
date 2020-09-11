@@ -1,4 +1,4 @@
-# phpBB 3.2 Extension - phpBB.de Terms of Use
+# phpBB 3.2 & 3.3 Extension - phpBB.de Terms of Use
 
 ## Installation
 
@@ -13,6 +13,12 @@ or create the following directory structure in your phpBB-root directory:
 and copy the repository content to it.
 
 Go to "ACP" > "Customise" > "Extensions" and enable the "Terms of Use" extension.
+
+## Permissions
+
+This extension adds one administrator permission. The permission can be found at "Administrative 
+permissions" in the tab 'Misc' > 'Can manage “Terms of Use“'. The role "Full Admin" gets it 
+automatically on install or update to v1.1.0. 
 
 ## Development
 
