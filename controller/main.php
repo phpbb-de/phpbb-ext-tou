@@ -88,60 +88,11 @@ class main
 			'U_VIEW_FORUM'	=> $this->helper->route('phpbbde_tou_main_controller'),
 		));
 
-		// Checking amount of available languages
-		$sql = 'SELECT lang_id
-				FROM ' . LANG_TABLE;
-		$result = $this->db->sql_query($sql);
-
-		$lang_row = array();
-		while ($row = $this->db->sql_fetchrow($result))
-		{
-			$lang_row[] = $row;
-		}
-		$this->db->sql_freeresult($result);
-
-		// Check for user language
-		$user_lang		= $this->request->variable('lang', $this->user->lang_name);
-		$change_lang	= $this->request->variable('tou_lang_change', '');
-		$s_hidden_fields = array();
-
-		if ($change_lang || $user_lang != $this->config['default_lang'])
-		{
-			$use_lang = ($change_lang) ? basename($change_lang) : basename($user_lang);
-
-			if (!function_exists('validate_language_iso_name'))
-			{
-				require($this->root_path . 'includes/functions_user.' . $this->php_ext);
-			}
-
-			if (!validate_language_iso_name($use_lang))
-			{
-				$user_lang = $use_lang;
-			}
-			else
-			{
-				$change_lang = '';
-				$user_lang = $this->user->lang_name;
-			}
-		}
-		// If we change the language, we want to pass the language parameter.
-		if ($change_lang)
-		{
-			$s_hidden_fields = array_merge($s_hidden_fields, array(
-				'lang'				=> $this->user->lang_name,
-			));
-		}
-
 		$this->template->assign_vars(array(
 			'L_TERMS_OF_USE' => $this->language->lang('TERMS_OF_USE_CONTENT', $this->config['sitename'], generate_board_url()),
 			'L_PRIVACY_POLICY' => $this->language->lang('PRIVACY_POLICY', $this->config['sitename'], generate_board_url()),
 
 			'S_UCP_ACTION' => $this->helper->route('phpbbde_tou_main_controller'),
-
-			'S_LANG_OPTIONS'	=> (count($lang_row) > 1 && !($this->config['tou_use_custom_tou'] || $this->config['tou_use_custom_pp'])) ? language_select($user_lang) : '',
-			'S_HIDDEN_FIELDS'	=> build_hidden_fields($s_hidden_fields),
-			'COOKIE_NAME'		=> $this->config['cookie_name'],
-			'COOKIE_PATH'		=> $this->config['cookie_path'],
 
 			'HAS_ALREADY_AGREED' => version_compare($this->user->data['user_tou_version'], $this->config['tou_version'], 'eq'),
 		));
