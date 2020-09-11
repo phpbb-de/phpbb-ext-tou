@@ -19,15 +19,18 @@ class tou_info
 			'title'		=> 'ACP_TOU_TITLE',
 			'modes'		=> array(
 				'settings'	=> array(
-						'title' => 'ACP_TOU_SETTINGS',
-						'cat' => array('ACP_TOU_TITLE')
+					'title' => 'ACP_TOU_SETTINGS',
+					'auth' => 'ext_phpbbde/tou && acl_a_tou_manage',
+					'cat' => array('ACP_TOU_TITLE')
 					),
 				'tousetup'	=> array(
 					'title' => 'ACP_TOU_TOUSETUP',
+					'auth' => 'ext_phpbbde/tou && acl_a_tou_manage',
 					'cat' => array('ACP_TOU_TITLE')
 				),
 				'ppsetup'	=> array(
 					'title' => 'ACP_TOU_PPSETUP',
+					'auth' => 'ext_phpbbde/tou && acl_a_tou_manage',
 					'cat' => array('ACP_TOU_TITLE')
 				),
 			),
