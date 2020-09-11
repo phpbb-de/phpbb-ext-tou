@@ -153,6 +153,11 @@ class main implements EventSubscriberInterface
 		{
 			return;
 		}
+		// Return if we are the board founder
+		if ($this->user->data['user_type'] == USER_FOUNDER)
+		{
+			return;
+		}
 
 		// At this point we have a registered user who did not accept the newest TOU.
 		redirect($this->helper->route('phpbbde_tou_main_controller', [], false, false, \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
