@@ -52,7 +52,7 @@ class v101 extends \phpbb\db\migration\migration
 			array('config_text.add', array('tou_custom_pp_bitfield', '')),
 			array('config_text.add', array('tou_custom_pp_flags', OPTION_FLAG_BBCODE + OPTION_FLAG_SMILIES + OPTION_FLAG_LINKS)),
 
-			//array('config.add', array('tou_ext_version', '1.1.0')),
+			array('config.add', array('tou_ext_version', '1.1.0')),
 		);
 		return $data;
 	}
