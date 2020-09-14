@@ -27,4 +27,8 @@ $lang = array_merge($lang, array(
 
 	'ACP_TOU_TOUSETUP'	=> 'Add custom Terms of Use',
 	'ACP_TOU_PPSETUP'	=> 'Add custom Privacy Policy',
+
+	'TOU_LOG_SETTINGS_UPDATED'	=> 'Terms of Use settings updated',
+	'TOU_LOG_TOU_UPDATED'		=> 'Terms of Use updated',
+	'TOU_LOG_PP_UPDATED'		=> 'Privacy policy updated',
 ));

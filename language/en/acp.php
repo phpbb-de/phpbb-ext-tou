@@ -31,6 +31,10 @@ $lang = array_merge($lang, array(
 	'ACP_TOU_VERSION_EXPLAIN' 			=> 'Every user, who has a lesser value than here defined, needs to agree to the terms of use on his next board visit. You need to input positive integer values.',
 
 	'ACP_TOU_SETTINGS_UPDATED'			=> 'The settings of “Terms of Use” were updated.',
+	'ACP_TOU_SETTINGS_NOT_UPDATED'		=> 'You need to input a higher number than the current version.',
+
+	'ACP_TOU_TOU_UPDATED'			=> 'The “Terms of Use” were updated.',
+	'ACP_TOU_PP_UPDATED'			=> 'The “Privacy Policy” was updated.',
 
 	// Custom TOU setup
 	'ACP_TOU_TOU_UPDATED'					=> 'The “Terms of Use” were updated.',

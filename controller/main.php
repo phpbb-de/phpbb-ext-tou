@@ -74,11 +74,10 @@ class main
 
 	/**
 	 * Handle all calls
-	 * @param string $name
 	 */
-	public function handle($name = '')
+	public function handle()
 	{
-		define('PHPBBDE\TOU\CONTROLLER\IN_TOU', true);
+		define('PHPBBDE_TOU_CONTROLLER_IN_TOU', true);
 		$this->language->add_lang('ucp');
 		$this->language->add_lang('tou', 'phpbbde/tou');
 
@@ -94,18 +93,18 @@ class main
 
 			'S_UCP_ACTION' => $this->helper->route('phpbbde_tou_main_controller'),
 
-			'HAS_ALREADY_AGREED' => version_compare($this->user->data['user_tou_version'], $this->config['tou_version'], 'eq'),
+			'HAS_ALREADY_AGREED' => $this->user->data['user_tou_version'] >= $this->config['tou_version'],
 		));
 
 		if ($this->request->is_set_post('agreed'))
 		{
-			if ( check_form_key('agreement'))
+			if ( check_form_key('tou_agreement'))
 			{
-				$sql = 'UPDATE ' . USERS_TABLE . '
-				SET user_tou_version = ' . (int) $this->config['tou_version'] . ',
-						user_tou_confirmdate = ' . (int) time() . ',
-						user_tou_confirmip = \'' . $this->user->ip . '\'
-				WHERE user_id = ' . (int) $this->user->data['user_id'];
+				$sql = 'UPDATE ' . USERS_TABLE . "
+				SET user_tou_version = " . (int) $this->config['tou_version'] . ",
+						user_tou_confirmdate = " . (int) time() . ",
+						user_tou_confirmip = '" . $this->db->sql_escape($this->user->ip) . "'
+				WHERE user_id = " . (int) $this->user->data['user_id'];
 				$this->db->sql_query($sql);
 
 				$redirect = "{$this->root_path}index.{$this->php_ext}";
@@ -114,7 +113,6 @@ class main
 
 				$l_redirect = $this->language->lang('RETURN_INDEX');
 
-				// append/replace SID (may change during the session for AOL users)
 				$redirect = reapply_sid($redirect);
 
 				meta_refresh(3, $redirect);
@@ -127,9 +125,9 @@ class main
 			trigger_error($this->language->lang('TOU_DENIED', $this->config['sitename']));
 		}
 
-		add_form_key('agreement');
+		add_form_key('tou_agreement');
 
-		return $this->helper->render('tou_body.html', $this->language->lang('TOU'));
+		return $this->helper->render('@phpbbde_tou/tou_body.html', $this->language->lang('TOU'));
 	}
 
 }

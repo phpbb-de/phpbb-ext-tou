@@ -143,13 +143,13 @@ class main implements EventSubscriberInterface
 		{
 			$this->template->assign_var('L_PRIVACY_POLICY', $this->language->lang('PRIVACY_POLICY', $this->config['sitename'], generate_board_url()));
 		}
-
-		if (version_compare($this->user->data['user_tou_version'], $this->config['tou_version'], 'eq') || $this->user->data['is_bot'] || !$this->user->data['is_registered'])
+		// Check for bot, registered user and if the version is higher or equal
+		if (($this->user->data['user_tou_version'] >= $this->config['tou_version']) || $this->user->data['is_bot'] || !$this->user->data['is_registered'])
 		{
 			return;
 		}
 		// If we are already showing the TOU, obviously we don't need to redirect there
-		if (defined('PHPBBDE\TOU\CONTROLLER\IN_TOU'))
+		if (defined('PHPBBDE_TOU_CONTROLLER_IN_TOU'))
 		{
 			return;
 		}
