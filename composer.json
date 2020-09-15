@@ -3,8 +3,8 @@
 	"type" : "phpbb-extension",
 	"description" : "Forces the user to confirm the terms of use.",
 	"homepage" : "https://github.com/phpbb-de/phpbb-ext-tou",
-	"version" : "1.1.0",
-	"time" : "2020-09-11",
+	"version" : "1.1.1",
+	"time" : "2020-09-15",
 	"license" : "GPL-2.0-only",
 	"authors" : [
 			{
