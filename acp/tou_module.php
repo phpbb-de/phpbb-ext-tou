@@ -32,11 +32,13 @@ class tou_module
 	protected $user;
 	protected $phpbb_root_path;
 	protected $php_ext;
+	protected $phpbb_log;
 
 	public function main($id, $mode)
 	{
 
 		global $config, $template, $request, $phpbb_container, $user, $phpbb_root_path, $phpEx;
+		global $phpbb_log;
 
 		/** @var \phpbb\language\language $language */
 		$language = $phpbb_container->get('language');
@@ -50,6 +52,7 @@ class tou_module
 		$this->user = $user;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $phpEx;
+		$this->phpbb_log = $phpbb_log;
 
 		// Add the TOU ACP lang file
 		$this->language->add_lang('acp', 'phpbbde/tou');
@@ -61,7 +64,7 @@ class tou_module
 			case 'settings':
 
 				$this->tpl_name = 'acp_tou_settings';
-				$this->page_title = ('ACP_TOU_SETTINGS');
+				$this->page_title = 'ACP_TOU_SETTINGS';
 
 				$form_name = 'ACP_TOU_SETTINGS';
 				add_form_key($form_name);
@@ -76,11 +79,21 @@ class tou_module
 
 					if (empty($error) && $this->request->is_set_post('submit'))
 					{
-						$this->config->set('tou_version', $this->request->variable('phpbbde_tou_version', 0));
-						$this->config->set('tou_use_custom_tou', $this->request->variable('tou_use_custom_tou', false));
-						$this->config->set('tou_use_custom_pp', $this->request->variable('tou_use_custom_pp', false));
+						if ($this->config['tou_version'] <= $this->request->variable('phpbbde_tou_version', 0))
+						{
+							$this->config->set('tou_version', $this->request->variable('phpbbde_tou_version', 0));
+							$this->config->set('tou_use_custom_tou', $this->request->variable('tou_use_custom_tou', false));
+							$this->config->set('tou_use_custom_pp', $this->request->variable('tou_use_custom_pp', false));
 
-						trigger_error($this->language->lang('ACP_TOU_SETTINGS_UPDATED') . adm_back_link($this->u_action));
+							// Add log entry
+							$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->ip, 'TOU_LOG_SETTINGS_UPDATED');
+
+							trigger_error($this->language->lang('ACP_TOU_SETTINGS_UPDATED') . adm_back_link($this->u_action));
+						}
+						else
+						{
+							trigger_error($this->language->lang('ACP_TOU_SETTINGS_NOT_UPDATED') . adm_back_link($this->u_action), E_USER_WARNING);
+						}
 					}
 				}
 
@@ -88,7 +101,7 @@ class tou_module
 					'ERRORS'								=> $error,
 					'U_ACTION'								=> $this->u_action,
 
-					'ACP_TOU_VERSION_VALUE'				=> $this->config['tou_version'],
+					'ACP_TOU_VERSION_VALUE'					=> $this->config['tou_version'],
 					'ACP_TOU_USE_CUSTOM_TOU_ENABLED'		=> $this->config['tou_use_custom_tou'],
 					'ACP_TOU_USE_CUSTOM_PP_ENABLED'			=> $this->config['tou_use_custom_pp'],
 				));
@@ -98,7 +111,7 @@ class tou_module
 			case 'tousetup':
 
 				$this->tpl_name = 'acp_tou_tousetup';
-				$this->page_title = ('ACP_TOU_TOUSETUP');
+				$this->page_title = 'ACP_TOU_TOUSETUP';
 
 				$language->add_lang(array('acp/board', 'posting'));
 
@@ -161,7 +174,9 @@ class tou_module
 							'tou_custom_tou_flags'			=> $tou_custom_tou_flags,
 						));
 
-						trigger_error($this->language->lang('ACP_TOU_SETTINGS_UPDATED') . adm_back_link($this->u_action));
+						$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->ip, 'TOU_LOG_TOU_UPDATED');
+
+						trigger_error($this->language->lang('ACP_TOU_TOU_UPDATED') . adm_back_link($this->u_action));
 					}
 				}
 
@@ -204,7 +219,7 @@ class tou_module
 			case 'ppsetup':
 
 				$this->tpl_name = 'acp_tou_ppsetup';
-				$this->page_title = ('ACP_TOU_PPSETUP');
+				$this->page_title = 'ACP_TOU_PPSETUP';
 
 				$language->add_lang(array('acp/board', 'posting'));
 
@@ -231,9 +246,9 @@ class tou_module
 					'tou_custom_pp_flags',
 				));
 
-				$tou_custom_pp_text		= $pp_data['tou_custom_pp_text'];
+				$tou_custom_pp_text			= $pp_data['tou_custom_pp_text'];
 				$tou_custom_pp_uid			= $pp_data['tou_custom_pp_uid'];
-				$tou_custom_pp_bitfield	= $pp_data['tou_custom_pp_bitfield'];
+				$tou_custom_pp_bitfield		= $pp_data['tou_custom_pp_bitfield'];
 				$tou_custom_pp_flags		= $pp_data['tou_custom_pp_flags'];
 
 				if ($this->request->is_set_post('submit') || $request->is_set_post('preview'))
@@ -262,12 +277,14 @@ class tou_module
 						// Store the data to the config_table in the database
 						$this->config_text->set_array(array(
 							'tou_custom_pp_text'			=> $tou_custom_pp_text,
-							'tou_custom_pp_uid'			=> $tou_custom_pp_uid,
+							'tou_custom_pp_uid'				=> $tou_custom_pp_uid,
 							'tou_custom_pp_bitfield'		=> $tou_custom_pp_bitfield,
 							'tou_custom_pp_flags'			=> $tou_custom_pp_flags,
 						));
 
-						trigger_error($this->language->lang('ACP_TOU_SETTINGS_UPDATED') . adm_back_link($this->u_action));
+						$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->ip, 'TOU_LOG_PP_UPDATED');
+
+						trigger_error($this->language->lang('ACP_TOU_PP_UPDATED') . adm_back_link($this->u_action));
 					}
 				}
 
