@@ -213,6 +213,8 @@ class tou_module
 					'S_LINKS_ALLOWED'				=> true,
 					'S_SMILIES_ALLOWED'				=> true,
 				));
+				// Assigning custom bbcodes
+				display_custom_bbcodes();
 			break;
 
 			// Setup own custom terms of use
@@ -321,6 +323,8 @@ class tou_module
 					'S_LINKS_ALLOWED'				=> true,
 					'S_SMILIES_ALLOWED'				=> true,
 				));
+				// Assigning custom bbcodes
+				display_custom_bbcodes();
 			break;
 
 		}
