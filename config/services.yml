@@ -8,6 +8,7 @@ services:
             - '@controller.helper'
             - '@user'
             - '@language'
+            - '@request'
             - '@template'
             - '%core.root_path%'
             - '%core.php_ext%'
