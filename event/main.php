@@ -174,49 +174,43 @@ class main implements EventSubscriberInterface
 	public function page_footer()
 	{
 		$mode = $this->request->variable('mode', '');
-		if ($mode == 'terms')
+		if (($mode == 'terms') && ($this->config['tou_use_custom_tou']))
 		{
-			if ($this->config['tou_use_custom_tou'])
-			{
-				$tou_data = $this->config_text->get_array(array(
-					'tou_custom_tou_text',
-					'tou_custom_tou_uid',
-					'tou_custom_tou_bitfield',
-					'tou_custom_tou_flags',
-				));
+			$tou_data = $this->config_text->get_array(array(
+				'tou_custom_tou_text',
+				'tou_custom_tou_uid',
+				'tou_custom_tou_bitfield',
+				'tou_custom_tou_flags',
+			));
 
-				$tou_custom_tou_text = generate_text_for_display(
-					$tou_data['tou_custom_tou_text'],
-					$tou_data['tou_custom_tou_uid'],
-					$tou_data['tou_custom_tou_bitfield'],
-					$tou_data['tou_custom_tou_flags']
-				);
-				$this->template->assign_vars(array(
-					'AGREEMENT_TEXT' => sprintf($tou_custom_tou_text, $this->config['sitename'], generate_board_url()),
-				));
-			}
+			$tou_custom_tou_text = generate_text_for_display(
+				$tou_data['tou_custom_tou_text'],
+				$tou_data['tou_custom_tou_uid'],
+				$tou_data['tou_custom_tou_bitfield'],
+				$tou_data['tou_custom_tou_flags']
+			);
+			$this->template->assign_vars(array(
+				'AGREEMENT_TEXT'	=> sprintf($tou_custom_tou_text, $this->config['sitename'], generate_board_url()),
+			));
 		}
-		elseif ($mode == 'privacy')
+		else if (($mode == 'privacy') && ($this->config['tou_use_custom_pp']))
 		{
-			if ($this->config['tou_use_custom_pp'])
-			{
-				$pp_data = $this->config_text->get_array(array(
-					'tou_custom_pp_text',
-					'tou_custom_pp_uid',
-					'tou_custom_pp_bitfield',
-					'tou_custom_pp_flags',
-				));
+			$pp_data = $this->config_text->get_array(array(
+				'tou_custom_pp_text',
+				'tou_custom_pp_uid',
+				'tou_custom_pp_bitfield',
+				'tou_custom_pp_flags',
+			));
 
-				$tou_custom_pp_text = generate_text_for_display(
-					$pp_data['tou_custom_pp_text'],
-					$pp_data['tou_custom_pp_uid'],
-					$pp_data['tou_custom_pp_bitfield'],
-					$pp_data['tou_custom_pp_flags']
-				);
-				$this->template->assign_vars(array(
-					'AGREEMENT_TEXT'		=> sprintf($tou_custom_pp_text, $this->config['sitename'], generate_board_url()),
-				));
-			}
+			$tou_custom_pp_text = generate_text_for_display(
+				$pp_data['tou_custom_pp_text'],
+				$pp_data['tou_custom_pp_uid'],
+				$pp_data['tou_custom_pp_bitfield'],
+				$pp_data['tou_custom_pp_flags']
+			);
+			$this->template->assign_vars(array(
+				'AGREEMENT_TEXT'	=> sprintf($tou_custom_pp_text, $this->config['sitename'], generate_board_url()),
+			));
 		}
 	}
 
