@@ -24,6 +24,7 @@ class main implements EventSubscriberInterface
 		return array(
 			'core.page_header'			=> 'page_header',
 			'core.user_add_modify_data' => 'user_add_modify',
+			'core.page_footer'			=> 'page_footer',
 		);
 	}
 
@@ -35,6 +36,9 @@ class main implements EventSubscriberInterface
 
 	/** @var \phpbb\config\db_text */
 	protected $config_text;
+
+	/** @var \phpbb\request\request */
+	protected $request;
 
 	/** @var \phpbb\template\template */
 	protected $template;
@@ -63,6 +67,7 @@ class main implements EventSubscriberInterface
 	 * @param \phpbb\auth\auth					$auth		Auth object
 	 * @param \phpbb\config\config 				$config
 	 * @param \phpbb\config\db_text				$config_text
+	 * @param \phpbb\request\request 			$request
 	 * @param \phpbb\template\template			$template	Template object
 	 * @param \phpbb\controller\helper			$helper 	Helper
 	 * @param \phpbb\language\language			$language
@@ -77,6 +82,7 @@ class main implements EventSubscriberInterface
 		\phpbb\controller\helper $helper,
 		\phpbb\user $user,
 		\phpbb\language\language $language,
+		\phpbb\request\request $request,
 		\phpbb\template\template $template,
 		$phpbb_root_path,
 		$php_ext)
@@ -90,6 +96,7 @@ class main implements EventSubscriberInterface
 		$this->user = $user;
 		$this->language =$language;
 		$this->template = $template;
+		$this->request = $request;
 	}
 
 	public function page_header($event)
@@ -162,6 +169,51 @@ class main implements EventSubscriberInterface
 		// At this point we have a registered user who did not accept the newest TOU.
 		redirect($this->helper->route('phpbbde_tou_main_controller', [], false, false, \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
 	}
+
+	// Overwrite AGREEMENT_TEXT for ToU or PP
+	public function page_footer()
+	{
+		$mode = $this->request->variable('mode', '');
+		if (($mode == 'terms') && ($this->config['tou_use_custom_tou']))
+		{
+			$tou_data = $this->config_text->get_array(array(
+				'tou_custom_tou_text',
+				'tou_custom_tou_uid',
+				'tou_custom_tou_bitfield',
+				'tou_custom_tou_flags',
+			));
+
+			$tou_custom_tou_text = generate_text_for_display(
+				$tou_data['tou_custom_tou_text'],
+				$tou_data['tou_custom_tou_uid'],
+				$tou_data['tou_custom_tou_bitfield'],
+				$tou_data['tou_custom_tou_flags']
+			);
+			$this->template->assign_vars(array(
+				'AGREEMENT_TEXT'	=> sprintf($tou_custom_tou_text, $this->config['sitename'], generate_board_url()),
+			));
+		}
+		else if (($mode == 'privacy') && ($this->config['tou_use_custom_pp']))
+		{
+			$pp_data = $this->config_text->get_array(array(
+				'tou_custom_pp_text',
+				'tou_custom_pp_uid',
+				'tou_custom_pp_bitfield',
+				'tou_custom_pp_flags',
+			));
+
+			$tou_custom_pp_text = generate_text_for_display(
+				$pp_data['tou_custom_pp_text'],
+				$pp_data['tou_custom_pp_uid'],
+				$pp_data['tou_custom_pp_bitfield'],
+				$pp_data['tou_custom_pp_flags']
+			);
+			$this->template->assign_vars(array(
+				'AGREEMENT_TEXT'	=> sprintf($tou_custom_pp_text, $this->config['sitename'], generate_board_url()),
+			));
+		}
+	}
+
 
 	public function user_add_modify($event)
 	{
