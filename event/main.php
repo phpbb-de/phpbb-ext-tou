@@ -190,7 +190,7 @@ class main implements EventSubscriberInterface
 				$tou_data['tou_custom_tou_flags']
 			);
 			$this->template->assign_vars(array(
-				'AGREEMENT_TEXT'	=> sprintf($tou_custom_tou_text, $this->config['sitename'], generate_board_url()),
+				'AGREEMENT_TEXT'	=> '</p><div style="font-size: 11px">' . $tou_custom_tou_text . '</div><p>',
 			));
 		}
 		else if (($mode == 'privacy') && ($this->config['tou_use_custom_pp']))
@@ -209,7 +209,7 @@ class main implements EventSubscriberInterface
 				$pp_data['tou_custom_pp_flags']
 			);
 			$this->template->assign_vars(array(
-				'AGREEMENT_TEXT'	=> sprintf($tou_custom_pp_text, $this->config['sitename'], generate_board_url()),
+				'AGREEMENT_TEXT'	=> '</p><div style="font-size: 11px">' . $tou_custom_pp_text . '</div><p>',
 			));
 		}
 	}
