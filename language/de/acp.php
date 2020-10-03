@@ -33,9 +33,6 @@ $lang = array_merge($lang, array(
 	'ACP_TOU_SETTINGS_UPDATED'			=> 'Die Einstellung von „Terms of Use“ wurden aktualisiert.',
 	'ACP_TOU_SETTINGS_NOT_UPDATED'		=> 'Du musst eine höhere Zahl als die aktuelle Version eintragen.',
 
-	'ACP_TOU_TOU_UPDATED'			=> 'Die „Nutzungsbedingungen“ wurden aktualisiert.',
-	'ACP_TOU_PP_UPDATED'			=> 'Die „Datenschutzerklärung“ wurde aktualisiert.',
-
 	// Custom TOU setup
 	'ACP_TOU_TOU_UPDATED'					=> 'Die „Nutzungsbedingungen“ wurden aktualisiert.',
 
