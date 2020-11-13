@@ -173,6 +173,10 @@ class main implements EventSubscriberInterface
 	// Overwrite AGREEMENT_TEXT for ToU or PP
 	public function page_footer()
 	{
+		// Check for phpBB version
+		$phpbb_version = $this->config['version'];
+		$old_phpbb_version = version_compare($phpbb_version, '3.3.1', '<=');
+
 		$mode = $this->request->variable('mode', '');
 		if (($mode == 'terms') && ($this->config['tou_use_custom_tou']))
 		{
@@ -190,7 +194,7 @@ class main implements EventSubscriberInterface
 				$tou_data['tou_custom_tou_flags']
 			);
 			$this->template->assign_vars(array(
-				'AGREEMENT_TEXT'	=> '</p><div style="font-size: 11px">' . $tou_custom_tou_text . '</div><p>',
+				'AGREEMENT_TEXT'	=> $old_phpbb_version ? '</p><div style="font-size: 12px">' . $tou_custom_tou_text . '</div><p>' : $tou_custom_tou_text,
 			));
 		}
 		else if (($mode == 'privacy') && ($this->config['tou_use_custom_pp']))
@@ -209,7 +213,7 @@ class main implements EventSubscriberInterface
 				$pp_data['tou_custom_pp_flags']
 			);
 			$this->template->assign_vars(array(
-				'AGREEMENT_TEXT'	=> '</p><div style="font-size: 11px">' . $tou_custom_pp_text . '</div><p>',
+				'AGREEMENT_TEXT'	=> $old_phpbb_version ? '</p><div style="font-size: 12px">' . $tou_custom_pp_text . '</div><p>' : $tou_custom_pp_text,
 			));
 		}
 	}
