@@ -4,7 +4,7 @@
 
 Copy the content of this repository via git clone:
 
-    git clone https://github.com/phpbb-de/phpbb-ext-tou.git ext/phpbbde/tou
+	git clone https://github.com/phpbb-de/phpbb-ext-tou.git ext/phpbbde/tou
 
 or create the following directory structure in your phpBB-root directory:
 
