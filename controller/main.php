@@ -19,6 +19,9 @@ class main
 	/** @var \phpbb\db\driver\driver_interface */
 	protected $db;
 
+	/** @var \phpbb\request\request */
+	protected $request;
+
 	/** @var \phpbb\template\template */
 	protected $template;
 
@@ -74,11 +77,10 @@ class main
 
 	/**
 	 * Handle all calls
-	 * @param string $name
 	 */
-	public function handle($name = '')
+	public function handle()
 	{
-		define('PHPBBDE\TOU\CONTROLLER\IN_TOU', true);
+		define('PHPBBDE_TOU_CONTROLLER_IN_TOU', true);
 		$this->language->add_lang('ucp');
 		$this->language->add_lang('tou', 'phpbbde/tou');
 
@@ -89,27 +91,31 @@ class main
 		));
 
 		$this->template->assign_vars(array(
-			'L_TERMS_OF_USE' => sprintf($this->language->lang('TERMS_OF_USE_CONTENT'), $this->config['sitename'], generate_board_url()),
-			'L_REGISTRATION' => $this->language->lang('TOU'),
-			'S_REGISTRATION' => true,
+			'L_TERMS_OF_USE' => $this->language->lang('TERMS_OF_USE_CONTENT', $this->config['sitename'], generate_board_url()),
+			'L_PRIVACY_POLICY' => $this->language->lang('PRIVACY_POLICY', $this->config['sitename'], generate_board_url()),
+
 			'S_UCP_ACTION' => $this->helper->route('phpbbde_tou_main_controller'),
+
+			'HAS_ALREADY_AGREED' => $this->user->data['user_tou_version'] >= $this->config['tou_version'],
 		));
 
-		if (isset($_POST['agreed']))
+		if ($this->request->is_set_post('agreed'))
 		{
-			if ( check_form_key('agreement'))
+			if ( check_form_key('tou_agreement'))
 			{
-				$sql = 'UPDATE ' . USERS_TABLE . '
-				SET user_tou_version = ' . (int) $this->config['tou_version'] . ',
-						user_tou_confirmdate = ' . (int) time() . ',
-						user_tou_confirmip = \'' . $this->user->ip . '\'
-				WHERE user_id = ' . (int) $this->user->data['user_id'];
+				$sql = 'UPDATE ' . USERS_TABLE . "
+				SET user_tou_version = " . (int) $this->config['tou_version'] . ",
+						user_tou_confirmdate = " . (int) time() . ",
+						user_tou_confirmip = '" . $this->db->sql_escape($this->user->ip) . "'
+				WHERE user_id = " . (int) $this->user->data['user_id'];
 				$this->db->sql_query($sql);
+
 				$redirect = "{$this->root_path}index.{$this->php_ext}";
+
 				$message = $this->language->lang('CONFIRM_TOU_REDIRECT');
+
 				$l_redirect = $this->language->lang('RETURN_INDEX');
 
-				// append/replace SID (may change during the session for AOL users)
 				$redirect = reapply_sid($redirect);
 
 				meta_refresh(3, $redirect);
@@ -117,15 +123,14 @@ class main
 			}
 			trigger_error('INVALID_FORM');
 		}
-		else if (isset($_POST['not_agreed']))
+		else if ($this->request->is_set_post('not_agreed'))
 		{
-			//check_form_key('agreement');
-			trigger_error(sprintf($this->language->lang('TOU_DENIED'), $this->config['sitename']));
+			trigger_error($this->language->lang('TOU_DENIED', $this->config['sitename']));
 		}
 
-		add_form_key('agreement');
+		add_form_key('tou_agreement');
 
-		return $this->helper->render('ucp_agreement.html', $this->language->lang('TOU'));
+		return $this->helper->render('@phpbbde_tou/tou_body.html', $this->language->lang('TOU'));
 	}
 
 }

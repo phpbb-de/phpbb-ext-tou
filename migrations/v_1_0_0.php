@@ -56,9 +56,4 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 				array('config.add', array('tou_version', '1')),
 		);
 	}
-
-	private function table($name)
-	{
-		return $this->table_prefix . $name;
-	}
 }

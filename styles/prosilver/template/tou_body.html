@@ -1,0 +1,29 @@
+{% INCLUDE 'overall_header.html' %}
+
+<form method="post" action="{{ S_UCP_ACTION }}" id="tou_agreement">
+
+	<div class="panel">
+		<div class="inner">
+			<div class="content">
+				<h2 class="sitename-title">{{ SITENAME }} - {{ lang('TOU') }}</h2>
+				<div style="font-size: 11px">{{ lang('TERMS_OF_USE') }}</div>
+				<h2 class="">{{ lang('PRIVACY') }}</h2>
+				<div style="font-size: 11px">{{ lang('PRIVACY_POLICY') }}</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel">
+		<div class="inner">
+			<fieldset class="submit-buttons">
+				{% if not HAS_ALREADY_AGREED and S_REGISTERED_USER %}
+				<input type="submit" name="agreed" id="agreed" value="{{ lang('AGREE') }}" class="button1" />&nbsp;
+				<input type="submit" name="not_agreed" value="{{ lang('NOT_AGREE') }}" class="button2" />
+				{% endif %}
+				{{ S_FORM_TOKEN }}
+			</fieldset>
+		</div>
+	</div>
+</form>
+
+{% INCLUDE 'overall_footer.html' %}

@@ -4,9 +4,11 @@ services:
         arguments:
             - '@auth'
             - '@config'
+            - '@config_text'
             - '@controller.helper'
             - '@user'
             - '@language'
+            - '@request'
             - '@template'
             - '%core.root_path%'
             - '%core.php_ext%'
@@ -24,3 +26,9 @@ services:
             - '@controller.helper'
             - '%core.root_path%'
             - '%core.php_ext%'
+    phpbbde.tou.listener:
+        class: phpbbde\tou\event\permission_listener
+        arguments:
+            - '@auth'
+        tags:
+            - { name: event.listener }
