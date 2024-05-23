@@ -166,6 +166,12 @@ class main implements EventSubscriberInterface
 			return;
 		}
 
+		// Do not redirect, if user needs to renew his password
+		if ($this->config['chg_passforce'] && $this->auth->acl_get('u_chgpasswd') && $this->user->data['user_passchg'] < time() - ($this->config['chg_passforce'] * 86400))
+		{
+			return;
+		}
+
 		// At this point we have a registered user who did not accept the newest TOU.
 		redirect($this->helper->route('phpbbde_tou_main_controller', [], false, false, \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
 	}
