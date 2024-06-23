@@ -1,15 +1,11 @@
 {% include 'overall_header.html' %}
 
 <script type="text/javascript">
-	// <![CDATA[
-
 	var form_name = 'acp_tou_ppsetup';
 	var text_name = 'tou_custom_pp_text';
 	var load_draft = false;
 	var upload = false;
 	var imageTag = false;
-
-	// ]]>
 </script>
 
 <a id="maincontent"></a>
@@ -26,8 +22,8 @@
 		<dl>
 			<dt><label for="tou_use_custom_pp">{{ lang('ACP_TOU_PPSETUP_USE_CUSTOM')}}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_TOU_PPSETUP_USE_CUSTOM_EXPLAIN')}}</span></dt>
 			<dd>
-				<label><input type="radio" class="radio" id="tou_use_custom_pp" name="tou_use_custom_pp" value="1" {% if ACP_TOU_USE_CUSTOM_PP_ENABLED %}checked="checked"{% endif %}/> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="tou_use_custom_pp" value="0" {% if not ACP_TOU_USE_CUSTOM_PP_ENABLED %}checked="checked"{% endif %}/> {{ lang('NO') }}</label>
+				<label><input type="radio" class="radio" id="tou_use_custom_pp" name="tou_use_custom_pp" value="1" {% if ACP_TOU_USE_CUSTOM_PP_ENABLED %}checked {% endif %}> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="tou_use_custom_pp" value="0" {% if not ACP_TOU_USE_CUSTOM_PP_ENABLED %}checked {% endif %}> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 
@@ -56,13 +52,13 @@
 
 			<dd style="margin-{S_CONTENT_FLOW_BEGIN}: 90px; margin-top: 5px;">
 				{% if S_BBCODE_ALLOWED %}
-				<label><input type="checkbox" class="radio" name="disable_bbcode"{% if S_BBCODE_DISABLE_CHECKED %} checked="checked"{% endif %} /> {{ lang('DISABLE_BBCODE') }}</label>
+				<label><input type="checkbox" class="radio" name="disable_bbcode"{% if S_BBCODE_DISABLE_CHECKED %} checked {% endif %}> {{ lang('DISABLE_BBCODE') }}</label>
 				{% endif %}
 				{% if S_SMILIES_ALLOWED %}
-				<label><input type="checkbox" class="radio" name="disable_smilies"{% if S_SMILIES_DISABLE_CHECKED %} checked="checked"{% endif %} /> {{ lang('DISABLE_SMILIES') }}</label>
+				<label><input type="checkbox" class="radio" name="disable_smilies"{% if S_SMILIES_DISABLE_CHECKED %} checked {% endif %}> {{ lang('DISABLE_SMILIES') }}</label>
 				{% endif %}
 				{% if S_LINKS_ALLOWED %}
-				<label><input type="checkbox" class="radio" name="disable_magic_url"{% if S_MAGIC_URL_DISABLE_CHECKED %} checked="checked"{% endif %} /> {{ lang('DISABLE_MAGIC_URL') }}</label>
+				<label><input type="checkbox" class="radio" name="disable_magic_url"{% if S_MAGIC_URL_DISABLE_CHECKED %} checked {% endif %}> {{ lang('DISABLE_MAGIC_URL') }}</label>
 				{% endif %}
 			</dd>
 			<dd style="margin-{S_CONTENT_FLOW_BEGIN}: 90px; margin-top: 10px;"><strong>{{ lang('OPTIONS') }}{{ lang('COLON') }} </strong>{{ BBCODE_STATUS }} :: {{ IMG_STATUS }} :: {{ FLASH_STATUS }} :: {{ URL_STATUS }} :: {{ SMILIES_STATUS }}</dd>
@@ -70,8 +66,8 @@
 	</fieldset>
 
 	<fieldset class="submit-buttons">
-		<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />
-		<input class="button2" type="submit" name="preview" value="{{ lang('PREVIEW') }}" />
+		<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}">
+		<input class="button2" type="submit" name="preview" value="{{ lang('PREVIEW') }}">
 		{{ S_FORM_TOKEN }}
 	</fieldset>
 </form>

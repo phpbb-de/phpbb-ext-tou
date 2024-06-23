@@ -17,8 +17,8 @@
 		<div class="inner">
 			<fieldset class="submit-buttons">
 				{% if not HAS_ALREADY_AGREED and S_REGISTERED_USER %}
-				<input type="submit" name="agreed" id="agreed" value="{{ lang('AGREE') }}" class="button1" />&nbsp;
-				<input type="submit" name="not_agreed" value="{{ lang('NOT_AGREE') }}" class="button2" />
+				<input type="submit" name="agreed" id="agreed" value="{{ lang('AGREE') }}" class="button1">&nbsp;
+				<input type="submit" name="not_agreed" value="{{ lang('NOT_AGREE') }}" class="button2">
 				{% endif %}
 				{{ S_FORM_TOKEN }}
 			</fieldset>
