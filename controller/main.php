@@ -119,7 +119,7 @@ class main
 				$redirect = reapply_sid($redirect);
 
 				meta_refresh(3, $redirect);
-				trigger_error($message . '<br /><br />' . sprintf($l_redirect, '<a href="' . $redirect . '">', '</a>'));
+				trigger_error($message . '<br><br>' . sprintf($l_redirect, '<a href="' . $redirect . '">', '</a>'));
 			}
 			trigger_error('INVALID_FORM');
 		}
